@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Minimal AWS Config IAM role (recorder already exists)
+Resources:
+  ConfigRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: AWSConfigServiceRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: config.amazonaws.com
+          Action: sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWS_ConfigRole
+Outputs:
+  ConfigRoleArn:
+    Description: IAM role used by AWS Config
+    Value:
+      Fn::GetAtt:
+      - ConfigRole
+      - Arn
