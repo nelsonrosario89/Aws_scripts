@@ -1,0 +1,35 @@
+[
+    {
+        "ConfigRuleName": "s3-bucket-server-side-encryption-enabled",
+        "Description": "Checks that your S3 bucket either has S3 default encryption enabled or that the S3 bucket policy explicitly denies put-object requests without server side encryption.",
+        "Source": {
+            "Owner": "AWS",
+            "SourceIdentifier": "S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED"
+        },
+        "InputParameters": "{}",
+        "MaximumExecutionFrequency": "TwentyFour_Hours",
+        "Scope": {
+            "ComplianceResourceTypes": ["AWS::S3::Bucket"]
+        }
+    },
+    {
+        "ConfigRuleName": "iam-password-policy",
+        "Description": "Checks whether the account password policy for IAM users meets the specified requirements.",
+        "Source": {
+            "Owner": "AWS",
+            "SourceIdentifier": "IAM_PASSWORD_POLICY"
+        },
+        "InputParameters": "{\"RequireUppercaseCharacters\":true,\"RequireLowercaseCharacters\":true,\"RequireSymbols\":true,\"RequireNumbers\":true,\"MinimumPasswordLength\":14,\"PasswordReusePrevention\":24,\"MaxPasswordAge\":90}",
+        "MaximumExecutionFrequency": "TwentyFour_Hours"
+    },
+    {
+        "ConfigRuleName": "ec2-instance-managed-by-ssm",
+        "Description": "Checks whether the Amazon EC2 instances in your account are managed by AWS Systems Manager.",
+        "Source": {
+            "Owner": "AWS",
+            "SourceIdentifier": "EC2_INSTANCE_MANAGED_BY_SSM"
+        },
+        "InputParameters": "{}",
+        "MaximumExecutionFrequency": "TwentyFour_Hours"
+    }
+]

@@ -1,0 +1,4 @@
+– CLI blocks you ran to recreate the recorder & channel
+– The bucket-policy JSON you applied
+– A CLI JSON snippet showing GuardDuty runtime monitoring = ENABLED
+– Audit Manager assessment name & evidence count (screenshot or CLI output)

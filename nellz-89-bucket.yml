@@ -1,0 +1,24 @@
+# CloudFormation template to harden and import an existing S3 bucket
+AWSTemplateFormatVersion: '2010-09-09'           # Template format version (required by CFN)
+Description: >-                                   # Appears in the Console for easy reference
+  Secure S3 bucket with encryption, versioning, and blocked public access.
+
+Resources:                                         # Top-level section where all resources are declared
+  SecureBucket:                                   # Logical ID (name inside the stack)
+    Type: AWS::S3::Bucket                         # Resource type identifier
+    DeletionPolicy: Retain                        # Keep bucket if the stack is deleted (required on import)
+    Properties:                                   # All bucket configuration goes under Properties
+      BucketName: nellz-89-bucket                 # The pre-existing bucket we’re importing
+      VersioningConfiguration:                    # Turn on object versioning for safety
+        Status: Enabled                           # Enable versioning (‘Suspended’ would turn it off)
+      PublicAccessBlockConfiguration:             # Block all forms of public access
+        BlockPublicAcls: true                     # Disallow new public ACLs on objects
+        IgnorePublicAcls: true                    # Ignore any existing ACLs that might be public
+        BlockPublicPolicy: true                   # Reject bucket policies that grant public access
+        RestrictPublicBuckets: true               # Deny anonymous listing even if policies allow it
+      BucketEncryption:                           # Default server-side encryption settings
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:        # Rule 1 (only one is needed)
+              SSEAlgorithm: AES256                # Encrypt using S3-managed AES-256 keys
+
+

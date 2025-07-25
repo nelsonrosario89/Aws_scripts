@@ -1,0 +1,18 @@
+{
+    "StandardsSubscriptions": [
+        {
+            "StandardsSubscriptionArn": "arn:aws:securityhub:us-east-1:097089567108:subscription/cis-aws-foundations-benchmark/v/1.2.0",
+            "StandardsArn": "arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0",
+            "StandardsInput": {},
+            "StandardsStatus": "READY",
+            "StandardsControlsUpdatable": "READY_FOR_UPDATES"
+        },
+        {
+            "StandardsSubscriptionArn": "arn:aws:securityhub:us-east-1:097089567108:subscription/aws-foundational-security-best-practices/v/1.0.0",
+            "StandardsArn": "arn:aws:securityhub:us-east-1::standards/aws-foundational-security-best-practices/v/1.0.0",
+            "StandardsInput": {},
+            "StandardsStatus": "READY",
+            "StandardsControlsUpdatable": "READY_FOR_UPDATES"
+        }
+    ]
+}

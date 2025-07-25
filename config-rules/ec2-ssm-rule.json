@@ -1,0 +1,14 @@
+{
+    "ConfigRule": {
+        "ConfigRuleName": "ec2-instance-managed-by-ssm",
+        "Description": "Checks whether the Amazon EC2 instances in your account are managed by AWS Systems Manager.",
+        "Source": {
+            "Owner": "AWS",
+            "SourceIdentifier": "EC2_INSTANCE_MANAGED_BY_SSM"
+        },
+        "InputParameters": "{}",
+        "Scope": {
+            "ComplianceResourceTypes": ["AWS::EC2::Instance"]
+        }
+    }
+}

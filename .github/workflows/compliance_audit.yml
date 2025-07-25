@@ -1,0 +1,10 @@
+name: Daily Compliance Audit
+
+on:
+  workflow_dispatch:  # Allow manual triggers
+  schedule:
+    - cron: "0 8 * * *"  # 08:00 UTC daily
+
+# Set environment variables for the entire workflow
+env:
+  PYTHONUNBUFFERED: 1  # Ensure Python output is sent to GitHub Actions log immediately

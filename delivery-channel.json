@@ -1,0 +1,8 @@
+{
+    "name": "default",
+    "s3BucketName": "nellz-89-bucket",
+    "s3KeyPrefix": "aws-config",
+    "configSnapshotDeliveryProperties": {
+        "deliveryFrequency": "Twelve_Hours"
+    }
+}

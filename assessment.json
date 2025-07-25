@@ -1,0 +1,33 @@
+{
+    "name": "GRC-Foundational-Security-Assessment",
+    "description": "Assessment for AWS Foundational Security Best Practices",
+    "assessmentReportsDestination": {
+        "destination": "s3://nellz-89-bucket/audit-reports/",
+        "destinationType": "S3"
+    },
+    "frameworkId": "5123d7a8-8d35-4af6-8b3d-4f49198af8ec",  
+    "roles": [
+        {
+            "roleArn": "arn:aws:iam::$(aws sts get-caller-identity --query Account --output text):role/aws-service-role/auditmanager.amazonaws.com/AWSAuditManagerServiceRolePolicy",
+            "roleType": "PROCESS_OWNER"
+        }
+    ],
+    "scope": {
+        "awsAccounts": [
+            {
+                "id": "$(aws sts get-caller-identity --query Account --output text)"
+            }
+        ],
+        "awsServices": [
+            {
+                "serviceName": "EC2"
+            },
+            {
+                "serviceName": "S3"
+            },
+            {
+                "serviceName": "IAM"
+            }
+        ]
+    }
+}

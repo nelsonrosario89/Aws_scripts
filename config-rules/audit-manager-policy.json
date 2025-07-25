@@ -1,0 +1,22 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "auditmanager:*",
+                "config:Get*",
+                "config:Describe*",
+                "config:List*",
+                "iam:Get*",
+                "iam:List*",
+                "s3:Get*",
+                "s3:List*",
+                "s3:PutObject",
+                "kms:Decrypt",
+                "kms:GenerateDataKey*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

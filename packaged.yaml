@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Minimal AWS Config setup (ConfigRole, Recorder, Delivery Channel)
+Resources:
+  ConfigRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: AWSConfigServiceRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: config.amazonaws.com
+          Action: sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWS_ConfigRole
+  ConfigRecorder:
+    Type: AWS::Config::ConfigurationRecorder
+    Properties:
+      Name: default
+      RoleARN:
+        Fn::GetAtt:
+        - ConfigRole
+        - Arn
+      RecordingGroup:
+        AllSupported: true
+        IncludeGlobalResourceTypes: true
+  ConfigDeliveryChannel:
+    Type: AWS::Config::DeliveryChannel
+    DependsOn: ConfigRecorder
+    Properties:
+      Name: default
+      S3BucketName: nellz-89-bucket
+      S3KeyPrefix: aws-config/
+      ConfigSnapshotDeliveryProperties:
+        DeliveryFrequency: Twelve_Hours
+Outputs:
+  ConfigRoleArn:
+    Description: IAM role used by AWS Config
+    Value:
+      Fn::GetAtt:
+      - ConfigRole
+      - Arn
+  ConfigBucketName:
+    Description: S3 bucket that stores AWS Config data
+    Value: nellz-89-bucket

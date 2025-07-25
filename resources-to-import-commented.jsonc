@@ -1,0 +1,14 @@
+[
+  {
+    // AWS CloudFormation resource type we are importing
+    "ResourceType": "AWS::S3::Bucket",
+
+    // Logical ID used inside the template (must match nellz-89-bucket.yml)
+    "LogicalResourceId": "SecureBucket",
+
+    "ResourceIdentifier": {
+      // Unique identifier that lets CloudFormation locate the existing bucket
+      "BucketName": "nellz-89-bucket"
+    }
+  }
+]

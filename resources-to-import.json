@@ -1,0 +1,12 @@
+{
+  "ResourcesToImport": [
+    {
+      "ResourceType": "AWS::S3::Bucket",
+      "LogicalResourceId": "SecureBucket",
+      "ResourceIdentifier": {
+        "BucketName": "nellz-89-bucket"
+      }
+    }
+  ]
+}
+

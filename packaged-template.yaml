@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Security Baseline - Simplified Version
+Resources:
+  ConfigRecorder:
+    Type: AWS::Config::ConfigurationRecorder
+    Properties:
+      Name: default
+      RecordingGroup:
+        AllSupported: true
+        IncludeGlobalResourceTypes: true
+      RoleARN:
+        Fn::GetAtt:
+        - ConfigRole
+        - Arn
+  ConfigDeliveryChannel:
+    Type: AWS::Config::DeliveryChannel
+    Properties:
+      ConfigSnapshotDeliveryProperties:
+        DeliveryFrequency: Twelve_Hours
+      Name: default
+      S3BucketName: nellz-89-bucket
+      S3KeyPrefix: aws-config/
+  ConfigRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: config.amazonaws.com
+          Action: sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWS_ConfigRole
+  GuardDutyDetector:
+    Type: AWS::GuardDuty::Detector
+    Properties:
+      Enable: true
+      FindingPublishingFrequency: FIFTEEN_MINUTES
+      DataSources:
+        S3Logs:
+          Enable: true
+  SecurityHub:
+    Type: AWS::SecurityHub::Hub
+    Properties: {}
+Outputs:
+  ConfigRecorderName:
+    Description: Name of the AWS Config Recorder
+    Value:
+      Ref: ConfigRecorder
+  GuardDutyDetectorId:
+    Description: ID of the GuardDuty Detector
+    Value:
+      Ref: GuardDutyDetector
+  SecurityHubArn:
+    Description: ARN of the Security Hub
+    Value:
+      Fn::GetAtt:
+      - SecurityHub
+      - ARN
