@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: "Lambda Compliance Logger \u2013 logs Config rule violations and sends\
+  \ high-severity alerts"
+Globals:
+  Function:
+    Runtime: python3.11
+    Timeout: 60
+    MemorySize: 512
+    Tracing: Active
+Resources:
+  ComplianceLoggerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ComplianceLoggerFunction
+      Handler: app.lambda_handler
+      Description: Logs compliance violations and optionally notifies via SNS
+      Environment:
+        Variables:
+          SNS_TOPIC_ARN:
+            Ref: ComplianceAlertsTopic
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      - SNSPublishMessagePolicy:
+          TopicName:
+            Fn::GetAtt:
+            - ComplianceAlertsTopic
+            - TopicName
+    Metadata:
+      SamResourceId: ComplianceLoggerFunction
+  ComplianceAlertsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: compliance-alerts
+Outputs:
+  FunctionArn:
+    Description: ARN of Compliance Logger Lambda
+    Value:
+      Fn::GetAtt:
+      - ComplianceLoggerFunction
+      - Arn
+    Export:
+      Name: ComplianceLoggerFunctionArn

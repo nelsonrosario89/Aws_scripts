@@ -74,11 +74,26 @@ aws organizations attach-policy --policy-id $POLICY_ID --target-id <ACCOUNT_ID>
 3. **Test**: Make an S3 bucket public in dev account → verify Lambda log + email.  
 4. **Reflection**: In `journal.md` record mean-time-to-remediate vs weekly scan baseline.
 
+### Week 5b – Automated Remediation (Ch 6 continuation)
+**Lab 3 – Pre-built Config Remediations**  
+1. Deploy **S3 bucket encryption** remediation using SSM document `AWSConfigRemediation-EnableS3BucketEncryption`.  
+2. Deploy **Security-group SSH restriction** remediation (`AWSConfigRemediation-RemoveUnrestrictedSourceInSecurityGroup`) to block `0.0.0.0/0 :22`.  
+3. Deploy **IAM password-policy** remediation (`AWSConfigRemediation-SetIAMPasswordPolicy`).  
+4. Create **`RemediationRole`** with least-privilege policy granting only the actions required by the above SSM documents.  
+5. Tune memory (≥512 MB) and 60-second timeout for remediation Lambdas; document rationale.  
+6. Record **mean-time-to-remediate (MTTR)** before/after automation in `journal.md`.
 
----
-## Section 3 – Python for GRC
+**Lab 4 – Evidence & Log Forwarding**  
+1. Create CloudWatch subscription filters or Kinesis Firehose to stream Lambda & Config remediation logs to a centralized **security-logs** account or S3 archival bucket.  
+2. Verify logs contain structured JSON fields for audit (timestamp, rule, resourceId, action).  
+3. Note storage location and retention policy in `runbooks/logging.md`.
+
 ### Week 6 – Ch 7-8
 • Write Python script listing all S3 buckets + encryption status across Org; export CSV.  
+• **Mini-lab – Custom Tagging Remediation**:  
+  1. Author Lambda that auto-tags EC2/S3/RDS resources missing required tags.  
+  2. Create Config **custom rule** to detect untagged resources and set Lambda as remediation target.  
+  3. Add unit tests; deploy with SAM and validate.  
 • Add GitHub Action to run nightly.
 
 ### Week 7 – Ch 9 FAFO Case Study
@@ -87,7 +102,7 @@ aws organizations attach-policy --policy-id $POLICY_ID --target-id <ACCOUNT_ID>
 • Write blog/LinkedIn post summarizing lessons.
 
 ---
-## Section 4 – Career & Portfolio
+## Section 3 – Python for GRC
 ### Week 8 – Ch 10 Skills Matrix
 • Self-assess technical & soft skills; draft 90-day up-skill plan.
 
@@ -103,6 +118,7 @@ aws organizations attach-policy --policy-id $POLICY_ID --target-id <ACCOUNT_ID>
 ---
 ## Ongoing (post-plan)
 • Monthly: run automated access review; archive report in Audit Manager.  
+• **Daily:** ensure CloudWatch Logs export job is running and buckets have lifecycle policy → Glacier after 90 days.  
 • Quarterly: add one new Config rule + remediation.  
 • Annually: present automation lessons to security leadership.
 
