@@ -5,13 +5,11 @@ on:
   schedule:
     - cron: "0 8 * * *"  # 08:00 UTC daily
 
-# Set environment variables for the entire workflow
-env:
-  PYTHONUNBUFFERED: 1  # Ensure Python output is sent to GitHub Actions log immediately
-
 jobs:
   compliance-audit:
     runs-on: ubuntu-latest
+    env:
+      PYTHONUNBUFFERED: 1  # Ensure Python output is sent to GitHub Actions log immediately
     steps:
       - uses: actions/checkout@v3
 
