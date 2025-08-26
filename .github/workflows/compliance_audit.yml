@@ -27,8 +27,4 @@ jobs:
 
       - name: Run compliance audit
         run: |
-          if [ -f compliance_audit.py ]; then
-            python compliance_audit.py
-          else
-            echo "No standalone compliance_audit.py found; skipping."
-          fi
+          [ -f compliance_audit.py ] && python compliance_audit.py || echo "No standalone compliance_audit.py found; skipping."
